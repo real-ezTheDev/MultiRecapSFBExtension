@@ -1,5 +1,19 @@
 # MultiRecapSFBExtension
 
+## Build Package
+
+Build this package by installing required depedencies:
+
+```
+npm install
+```
+
+then build:
+
+```
+npm run build
+```
+
 ## Install
 
 First, import the extension module in ExtensionLoader.ts of your SFB project.

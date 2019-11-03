@@ -4,6 +4,7 @@
   "description": "Skill Flow Builder(SFB) extension, which adds the ability to handle mutiple recaps.",
   "main": "dist/index.js",
   "scripts": {
+    "build": "npx tsc -p .",
     "test": "npx mocha \"dist/test/**/*.spec.js\""
   },
   "files": [
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.12.5",
-    "mocha": "^6.2.2"
+    "mocha": "^6.2.2",
+    "typescript": "^3.6.4"
   }
 }
