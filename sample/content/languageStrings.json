@@ -1,0 +1,19 @@
+{
+    "en-US": {
+        "translation": {
+            "start.narration": "This is a say message.\n\tSay hello to continue, and say recap for a recap.",
+            "start.reprompt": "this is a reprompt messsage.",
+            "utterance-continue": "continue",
+            "utterance-hello": "hello",
+            "utterance-recap": "recap",
+            "utterance-some other words": "some other words",
+            "utterance-word": "word",
+            "utterance-more": "more",
+            "utterance-random words to fill up model": "random words to fill up model",
+            "utterance-more model words": "more model words",
+            "utterance-*": "*",
+            "continue scene.narration": "Continue is a lie. this just reset your recap.\n\tsay continue to get back.",
+            "continue scene.recap": "Just a normal recap sorry."
+        }
+    }
+}

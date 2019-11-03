@@ -1,0 +1,36 @@
+@start
+*say
+	This is a say message.
+	Say hello to continue, and say recap for a recap.
+*reprompt
+	this is a reprompt messsage.
+*recap 2
+	2nd recap.
+*recap 3...4
+	3rd to 4th recap.
+*recap 5,7
+	5th and 7th recap.
+*recap
+	default recap.
+*then
+	hear continue, hello {
+		-> continue scene
+	}
+
+@continue scene
+*say
+	Continue is a lie. this just reset your recap.
+	say continue to get back.
+*recap
+	Just a normal recap sorry.
+*then
+	hear continue {
+		-> start
+	}
+
+@global append
+*then
+	hear recap, some other words, word, more, random words to fill up model, more model words, * {
+		bookmark
+		-> bookmark *recap
+	}

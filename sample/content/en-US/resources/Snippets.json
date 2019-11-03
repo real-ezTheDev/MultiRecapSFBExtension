@@ -1,0 +1,19 @@
+{
+    "sfx": "<audio src='$SNIPPET_S3_RESOURCES_URI/audio/$1'/>",
+
+    "pic": "$SNIPPET_S3_RESOURCES_URI/images/$1",
+
+    "trumpet": "<audio src='https://s3.amazonaws.com/alexa-ml/sounds/sound-library-loud/Instruments/Trumpet_1.mp3' />",
+
+    "pause for": "<break time='$1'/>",
+
+    "pause": "<break time='1s'/>",
+
+    "shortPause": "<break time='0.5s'/>",
+
+    "kid": "<voice name='Justin'>",
+    
+    "/kid": "</voice>",
+
+    "ocean wave": "<audio src='https://s3.amazonaws.com/alexa-ml/sounds/ezra-test-sounds/original/ocean_wave.mp3'/>"
+}

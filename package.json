@@ -1,0 +1,31 @@
+{
+  "name": "sfb-multi-recap-extension",
+  "version": "1.0.0",
+  "description": "Skill Flow Builder(SFB) extension, which adds the ability to handle mutiple recaps.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "npx mocha \"dist/test/**/*.spec.js\""
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/real-ezTheDev/MultiRecapSFBExtension.git"
+  },
+  "author": "ezTheDev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/real-ezTheDev/MultiRecapSFBExtension/issues"
+  },
+  "homepage": "https://github.com/real-ezTheDev/MultiRecapSFBExtension#readme",
+  "dependencies": {
+    "@alexa-games/sfb-f": "^1.2.1",
+    "@alexa-games/sfb-skill": "^1.2.1"
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.12.5",
+    "mocha": "^6.2.2"
+  }
+}

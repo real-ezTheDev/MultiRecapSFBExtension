@@ -1,0 +1,47 @@
+@test scene 1
+*say
+    This is a test scene 1.
+*reprompt
+    This is a test scene 1 reprompt.
+*recap
+    This is a test scene 1 recap.
+*recap 1
+    This is a recap for first time only
+*then
+    // test scene 1 then section
+    set dummyVariable as 1
+    hear continue {
+        -> test scene 2
+    }
+
+@test scene 2
+*say
+    This is a test scene 2.
+*reprompt
+    This is a test scene 2 reprompt.
+*recap
+    This is a test scene 2 recap.
+*recap 2...4
+    This is a recap for greater than 2nd to 4th times
+*then
+    // test scene 2 then section
+    set dummyVariable as 2
+    bear continue {
+        -> test scene 3
+    }
+
+@test scene 3
+*say
+    This is a test scene 3.
+*reprompt
+    This is a test scene 3 reprompt.
+*recap
+    This is a test scene 3 recap.
+*recap 2,4,6
+    This a recap for 2nd, 4th, and 6th time.
+*then
+    // test scene 3 then section
+    set dummyVariable as 3
+    hear continue {
+        -> test scene 1
+    }

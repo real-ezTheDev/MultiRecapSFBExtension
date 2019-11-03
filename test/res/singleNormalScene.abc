@@ -1,0 +1,13 @@
+@test scene 1
+*say
+    This is a test scene 1.
+*reprompt
+    This is a test scene 1 reprompt.
+*recap
+    This is a test scene 1 recap.
+*then
+    // test scene 1 then section
+    set dummyVariable as 1
+    hear continue {
+        -> test scene 2
+    }
