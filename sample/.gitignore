@@ -1,3 +1,5 @@
 dist
 .deploy
 node_modules
+baked
+package-lock.json

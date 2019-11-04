@@ -5,6 +5,10 @@ export class ContentParseHelper {
     private static readonly RECAP_HEADER_REGEX = "^[ \\t]*?\\*[ \\t]*?recap(?:[ \\t]+?(.+?))?[ \\t]*?$";
     private static readonly PROPERTY_HEADER_REGEX = "^[ \\t]*?\\*[ \\t]*?(.*?)[ \\t]*?$";
 
+    /**
+     * Given a well formatted .abc file structure, split the texts into scenes.
+     * @param text 
+     */
     public static splitToScenes(text: string): {
         id: string;
         text: string;
@@ -33,6 +37,10 @@ export class ContentParseHelper {
         return splitScenes;
     }
 
+    /**
+     * Given the scene text, extract special property `*recap [condition]`.
+     * @param sceneText a single scene definition of SFB scene in text.
+     */
     public static extractRecaps(sceneText: string): Recap[] {
         const resultingRecap: Recap[] = [];
 
@@ -58,6 +66,11 @@ export class ContentParseHelper {
         return resultingRecap;
     }
 
+    /**
+     * Convert the special recap property condition to SFB if-statement condition format.
+     * @param recapCondition recap property condition
+     * @param checkVar name of variable, which is used to store the recap counter value.
+     */
     public static convertRecapCondition(recapCondition: string, checkVar: string): string {
         let totalCondition: string = "";
 

@@ -1,10 +1,13 @@
 {
     "en-US": {
         "translation": {
-            "start.narration": "This is a say message.\n\tSay hello to continue, and say recap for a recap.",
+            "start.narration": "This is a say message.\n\tSay hello to continue, and say recap for a recap.\n\tSay test fallback to test fallback scene.",
             "start.reprompt": "this is a reprompt messsage.",
             "utterance-continue": "continue",
             "utterance-hello": "hello",
+            "utterance-test fallback": "test fallback",
+            "utterance-fallback": "fallback",
+            "utterance-test": "test",
             "utterance-recap": "recap",
             "utterance-some other words": "some other words",
             "utterance-word": "word",
@@ -13,7 +16,9 @@
             "utterance-more model words": "more model words",
             "utterance-*": "*",
             "continue scene.narration": "Continue is a lie. this just reset your recap.\n\tsay continue to get back.",
-            "continue scene.recap": "Just a normal recap sorry."
+            "fallback test.narration": "This is a fallback test scene.\n\trecap 4 times to see it fallback to \"falling back scene\".",
+            "fallback test.reprompt": "say recap 4 times and it should go to falling back scene.",
+            "falling back scene.narration": "At falling back scene now!\n\tReturning to the beginning."
         }
     }
 }

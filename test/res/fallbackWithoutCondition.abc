@@ -1,0 +1,18 @@
+@start
+*say
+	This is a say message.
+	Say hello to continue, and say recap for a recap.
+*reprompt
+	this is a reprompt messsage.
+*recap
+	default recap.
+*then
+	hear continue, hello {
+		-> continue scene
+	}
+
+	hear recap, * {
+		-> start *recap
+	}
+
+    fallback -> fallback scene

@@ -5,14 +5,29 @@ import {ImporterExtension, InstructionExtension, InstructionExtensionParameter,
 import {ExtensionLoaderParameter} from '@alexa-games/sfb-skill';
 
 import {ContentParseHelper} from './contentParseHelper';
+import {FallbackInstructionHelper} from './fallbackInstructionHelper';
 import {Recap} from './recap';
 
 export class MultiRecapExtension implements ImporterExtension, InstructionExtension, DriverExtension {
 
+    /**
+     * name of the variable tracking the number of recap played in-a-row.
+     */
     private readonly RECAP_COUNTER: string = "system_RecapCounter";
+
+    /**
+     * name of the variable, which is used to indicate if the recap is selected (to avoid appending other recaps).
+     */
     private readonly RECAP_SELECTED_VARIABLE: string = "system_MultiRecapSelected";
+
+    /**
+     * name of the variable, which saves the recap counter per scene of the curren request.
+     */
     private readonly RECAP_RECORD: string = "system_RecapRecord";
 
+    /**
+     * name of the custom instruction used to update the recap counter for the current scene.
+     */
     private readonly RECORD_RECAP_INSTRUCTION: string = "recordRecap";
 
     // importer related varaibles
@@ -22,13 +37,10 @@ export class MultiRecapExtension implements ImporterExtension, InstructionExtens
     private recapCounterRecord: {[key: string]: number} = {};
 
     constructor(private param: ExtensionLoaderParameter) {
-    }
-    
+    }    
 
     /**
      * Scan through the source text to find instances of `*recap [num]`.
-     * 
-     * @param sourceHelper 
      */
     public async extendSourceContent(sourceHelper: SourceContentHelper): Promise<void> {
         sourceHelper.getAllSourceContents().forEach((content) => {
@@ -48,18 +60,39 @@ export class MultiRecapExtension implements ImporterExtension, InstructionExtens
                     this.specialRecaps[sceneID] = recaps;
                 }
             });
+
             
+            const formattedContent = scenes.map((scene) => {
+                const sceneID = scene.id.trim().toLowerCase();
+
+                if (FallbackInstructionHelper.sceneHasFallback(scene.text) && !this.specialRecaps[sceneID]) {
+                    this.specialRecaps[sceneID] = [];
+                }
+                
+                return FallbackInstructionHelper.translateSceneForFallback(scene.text, this.RECAP_COUNTER);
+
+            }).reduce((prev, curr, i) => {
+                if (!prev) {
+                    return prev;
+                }
+                return `${prev}\n${curr}`;
+            });
+
+            if (content.id) {
+                sourceHelper.setSourceContent(content.id, formattedContent);
+            }
         });
     }
 
     /**
-     * For all scenes with special(extended) recaps, add a custom instruction in the beginning of the *then for conditional recaps
-     * .
-     * @param metadataHelper 
+     * For all scenes with special(extended) recaps, add a custom instruction in the beginning of the *then for conditional recaps.
      */
     public async extendImportedContent(metadataHelper: StoryMetadataHelper): Promise<void> {
         
         for (let sceneID of Object.keys(this.specialRecaps)) {
+            if (["global append", "global prepend", "global"].includes(sceneID)) {
+                continue;
+            }
             
             if (this.hasRecap(sceneID, metadataHelper)) {
                 this.removeRecap(sceneID, metadataHelper);
@@ -89,7 +122,6 @@ export class MultiRecapExtension implements ImporterExtension, InstructionExtens
 
     /**
      * Right before responding/saving state, clean up the recap record.
-     * @param param 
      */
     async post(param: DriverExtensionParameter): Promise<void> {
         const record: {[key: string]: number} = param.storyState[this.RECAP_RECORD];
@@ -122,8 +154,8 @@ export class MultiRecapExtension implements ImporterExtension, InstructionExtens
         const currentScene = StoryStateHelper.getCurrentSceneID(param.storyState);
 
         if (currentScene) {
-            if (!recapCounters[currentScene]) {
-                recapCounters[currentScene] = 0;
+            if (recapCounters[currentScene] === undefined) {
+                recapCounters[currentScene] = -1;
             }
 
             recapCounters[currentScene] ++;
@@ -131,10 +163,13 @@ export class MultiRecapExtension implements ImporterExtension, InstructionExtens
             // update the recap counter variable used for recap selection logic
             param.storyState[this.RECAP_COUNTER] = recapCounters[currentScene];
         } else {
-            param.storyState[this.RECAP_COUNTER] = 0;
+            param.storyState[this.RECAP_COUNTER] = -1;
         }
     }
 
+    /**
+     * Generate a list of [[SceneDirections]] supporting the multi/branching recap behavior given the list of list of [[Recap]] needed.
+     */
     private buildRecapInstructions(recaps: Recap[]): SceneDirection[] {
         const instructionBuilder = new SceneDirectionBuilder();
 

@@ -4,13 +4,13 @@
 
 Build this package by installing required depedencies:
 
-```
+``` bash
 npm install
 ```
 
 then build:
 
-```
+``` bash
 npm run build
 ```
 
@@ -40,7 +40,9 @@ Make sure the instance of MultiRecapExtension is before the built-in AlexaExtens
 
 ## Use
 
-Once you have this extension installed in your project, you can define recap messages based on number of times the recap has been used.
+### Conditional Recap Message
+
+Once you have this extension installed in your project, you can define recap messages based on number of times the recap has been used. Use the [recap condition](#Recap-Condition) to define the when the special recaps are played.
 
 ``` abc
 *recap 3
@@ -62,6 +64,24 @@ Make sure you have the catch all handle in your `@global prepend` scene like the
 ```
 
 The default recap/repeat behavior of SFB makes it so that it does not replay the `*then` section to prevent unwanted variable modification on repeat/recap. Defining a `hear *` globally guarantees that the extension's logic is hit everytime.
+
+### Fallback Routing
+
+This extension also enables a fallback routing instruction. You can use the fallback command to route automatically to another scene after playing the recap message. You can also define a [recap condition](#Recap-Conditions) to indicate at what recap the routing occurs.
+
+You can use the fallback instruction by writing the following line for `*then` section:
+
+``` abc
+    fallback [(optional)recap condition] -> [scene name]
+```
+
+To better demonstrate the formate, here is an example of setting up the scene to auto route to a scene named `@fallback scene` when the user experiences a `recap` for the third time.:
+
+``` abc
+@scene
+*then
+    fallback 3 -> fallback scene
+```
 
 ### Recap Conditions
 

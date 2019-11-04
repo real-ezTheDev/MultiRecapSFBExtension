@@ -1,9 +1,9 @@
 import {ContentParseHelper} from '../lib/contentParseHelper';
+import {TestResourceAccessor} from './testResourceAccessor';
+
+const loadTestResource = TestResourceAccessor.loadTestResource;
 
 import {strict as assert} from 'assert';
-
-import * as fs from 'fs';
-import * as path from 'path';
 
 describe("ContentParserHelpr Unit Tests", function () {
     describe ("Scene Split Tests", function () {
@@ -149,10 +149,3 @@ describe("ContentParserHelpr Unit Tests", function () {
         });
     });
 });
-
-function loadTestResource(resourceName: string): string {
-    const resourcePath = path.resolve("test", "res");
-    const loadedText = fs.readFileSync(path.resolve(resourcePath, resourceName), "utf8");
-
-    return loadedText;
-}

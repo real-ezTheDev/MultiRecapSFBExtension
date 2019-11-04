@@ -2,6 +2,7 @@
 *say
 	This is a say message.
 	Say hello to continue, and say recap for a recap.
+	Say test fallback to test fallback scene.
 *reprompt
 	this is a reprompt messsage.
 *recap 2
@@ -17,6 +18,10 @@
 		-> continue scene
 	}
 
+	hear test fallback, fallback, test {
+		-> fallback test
+	}
+
 @continue scene
 *say
 	Continue is a lie. this just reset your recap.
@@ -27,6 +32,30 @@
 	hear continue {
 		-> start
 	}
+
+@fallback test
+*say
+	This is a fallback test scene.
+	recap 4 times to see it fallback to "falling back scene".
+*reprompt
+	say recap 4 times and it should go to falling back scene.
+*recap 1
+	recap 1!
+*recap 2
+	recap 2!
+*recap 3
+	recap 3!
+*recap 4
+	recap 4! here we go!
+*then
+	fallback 4 -> falling back scene
+
+@falling back scene
+*say
+	At falling back scene now!
+	Returning to the beginning.
+*then
+	-> start
 
 @global append
 *then
